@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        body{
+            padding-top:50px;
+            background-color:#34495e;
+        }
+        .hiddenRow {
+            padding: 0 !important;
+        }
+        .anchor-link-text {
+          display: block;
+          width: 200px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="col-md-12">
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Reports
+        </div>
+        <div class="panel-body">
+            <table class="table table-condensed table-striped">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>LOB</th>
+                    <th>Sub-Lob</th>
+                    <th>LDA</th>
+                    <th>DAG</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="subLob : ${subLobs}">
+                    <tr data-toggle="collapse" th:attr="data-target='#subLob'+${subLob.id}" class="accordion-toggle">
+                        <td>
+                            <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span>
+                            </button>
+                        </td>
+                        <td th:text="${subLob.lob}"><b>CIB</b></td>
+                        <td th:text="${subLob.subLob}"><b>Payments</b></td>
+                        <td th:text="${subLob.lda}">Eric</td>
+                        <td th:text="${subLob.dag}">Melanie</td>
+                        <td>Active</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="12" class="hiddenRow">
+                            <div class="accordian-body collapse" th:id="'subLob'+${subLob.id}">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr class="info">
+                                        <th></th>
+                                        <th>Project</th>
+                                        <th>Project Report Version</th>
+                                        <th>Last Updated On</th>
+                                        <th>Report Last Run</th>
+                                        <th>Last Run Status</th>
+                                        <th>Manage Scheduler</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="project : ${subLob.projects}" data-toggle="collapse"
+                                        class="accordion-toggle"
+                                        th:attr="data-target='#project'+${project.name}">
+                                        <td></td>
+                                        <td><a th:href="@{__${project.reportLink}__}" target="_blank"
+                                               rel="noreferrer noopener">
+                                            <span th:text="${project.name}" class="anchor-link-text"></span></a>
+                                        </td>
+                                        <td th:text="${project.latestProjectVersion}">168</td>
+                                        <td th:text="${project.lastUpdated}">2016/09/27</td>
+                                        <td th:text="${project.reportLastRun}">2016/09/27</td>
+                                        <td th:text="${project.lastRunStatus}">2017/09/27</td>
+                                        <td>
+                                            <a href="#" class="btn btn-default btn-sm">
+                                                <i class="glyphicon glyphicon-cog"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
